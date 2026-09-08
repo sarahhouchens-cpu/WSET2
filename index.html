@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WSET 2 Revision Bench</title>
+<meta name="description" content="Mock questions and topic notes for the WSET Level 2 Award in Wines.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,500;0,600;1,400&family=Bodoni+Moda:ital,opsz,wght@0,6..96,500;0,6..96,600;1,6..96,500&family=IBM+Plex+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+
+<div class="shell">
+
+  <header class="masthead">
+    <div>
+      <p class="eyebrow">WSET Level 2 Award in Wines</p>
+      <h1>Revision <em>Bench</em></h1>
+    </div>
+    <div class="countdown" aria-live="polite">
+      <span class="n" id="cd-number">—</span>
+      <span class="lbl" id="cd-label"></span>
+    </div>
+  </header>
+
+  <nav class="tabs" role="tablist" aria-label="Study modes">
+    <button class="tab" role="tab" id="tab-quiz" data-tab="quiz"
+            aria-selected="true" aria-controls="panel-quiz" tabindex="0">
+      <span class="idx">01</span>Mock questions
+    </button>
+    <button class="tab" role="tab" id="tab-topics" data-tab="topics"
+            aria-selected="false" aria-controls="panel-topics" tabindex="-1">
+      <span class="idx">02</span>Topic notes
+    </button>
+  </nav>
+
+  <!-- ------------------------------------------------------------ tab 1: quiz -->
+  <section class="panel" data-panel="quiz" id="panel-quiz" role="tabpanel" aria-labelledby="tab-quiz">
+    <div class="quiz-head">
+      <div class="focus-picker">
+        <label class="field-label" for="focus">Focus the deck</label>
+        <select id="focus"></select>
+      </div>
+      <div class="scoreline" id="scoreline"></div>
+    </div>
+    <div class="qcard" id="qcard"></div>
+  </section>
+
+  <!-- ---------------------------------------------------------- tab 2: topics -->
+  <section class="panel" data-panel="topics" id="panel-topics" role="tabpanel" aria-labelledby="tab-topics" hidden>
+    <div class="topics-layout">
+
+      <aside class="rail">
+        <section>
+          <label class="field-label" for="topic-select">Choose a topic</label>
+          <select id="topic-select"></select>
+        </section>
+
+        <section class="progress-wrap">
+          <p class="field-label">Coverage</p>
+          <p class="progress-num" id="progress-num"></p>
+          <div class="ticks" id="ticks" aria-hidden="true"></div>
+          <p class="rail-note" id="rail-note"></p>
+        </section>
+
+        <section>
+          <p class="field-label">Read next</p>
+          <ol class="readnext" id="readnext"></ol>
+        </section>
+      </aside>
+
+      <article class="topic-doc" id="topic-doc"></article>
+
+    </div>
+  </section>
+
+  <footer class="foot">
+    <span>Progress is saved in this browser only</span>
+    <button class="btn-link" id="reset" type="button">Reset progress</button>
+  </footer>
+
+</div>
+
+<script src="assets/data.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>
