@@ -8,7 +8,10 @@
 
   /* ------------------------------------------------------------- persistence */
 
-  var state = { reviewed: [], stats: {} };
+  var state = { reviewed: [], stats: {}, confidence: {} };
+
+  /* How the 1-5 self-rating reads back to the user. */
+  var CONFIDENCE_LABELS = ["", "No idea", "Shaky", "Getting there", "Solid", "Could teach it"];
 
   function load() {
     try {
@@ -17,6 +20,7 @@
       var parsed = JSON.parse(raw);
       if (parsed && Array.isArray(parsed.reviewed)) state.reviewed = parsed.reviewed;
       if (parsed && parsed.stats && typeof parsed.stats === "object") state.stats = parsed.stats;
+      if (parsed && parsed.confidence && typeof parsed.confidence === "object") state.confidence = parsed.confidence;
     } catch (e) { /* private mode, blocked storage: carry on with defaults */ }
   }
 
@@ -27,6 +31,8 @@
   }
 
   function isReviewed(id) { return state.reviewed.indexOf(id) !== -1; }
+
+  function confidenceOf(id) { return state.confidence[id] || 0; }
 
   function topicStat(id) {
     var s = state.stats[id];
@@ -121,7 +127,8 @@
     if (focus === "weak") {
       var weak = TOPICS.filter(function (t) {
         var s = topicStat(t.id);
-        return s.seen > 0 && s.correct < s.seen;
+        var conf = confidenceOf(t.id);
+        return (s.seen > 0 && s.correct < s.seen) || (conf > 0 && conf <= 2);
       }).map(function (t) { return t.id; });
       if (!weak.length) return QUESTIONS.slice();
       return QUESTIONS.filter(function (q) { return weak.indexOf(q.t) !== -1; });
@@ -262,7 +269,7 @@
     var focus = $("#focus");
     var frag = document.createDocumentFragment();
 
-    [["all", "All topics (" + QUESTIONS.length + " questions)"], ["weak", "My weak spots"]].forEach(function (pair) {
+    [["all", "All topics (" + QUESTIONS.length + " questions)"], ["weak", "My weak spots (missed or rated 1-2)"]].forEach(function (pair) {
       var o = el("option", null, pair[1]);
       o.value = pair[0];
       frag.appendChild(o);
@@ -333,7 +340,8 @@
     [].slice.call(sel.options).forEach(function (o) {
       var t = byId[o.value];
       if (!t) return;
-      o.textContent = (isReviewed(t.id) ? "✓ " : "• ") + t.name;
+      var conf = confidenceOf(t.id);
+      o.textContent = (isReviewed(t.id) ? "✓ " : "• ") + t.name + (conf ? "  " + conf + "/5" : "");
     });
   }
 
@@ -436,6 +444,8 @@
       doc.appendChild(sectionBlock("Study alongside", links));
     }
 
+    doc.appendChild(confidenceBlock(t));
+
     var foot = el("div", "topic-quizlink");
     var st = topicStat(t.id);
     var n = QUESTIONS.filter(function (q) { return q.t === t.id; }).length;
@@ -455,63 +465,133 @@
     doc.appendChild(foot);
   }
 
+  /* Self-rated confidence, 1-5, read back into the recommendations below. */
+  function confidenceBlock(t) {
+    var current = confidenceOf(t.id);
+
+    var block = el("div", "conf-block");
+
+    var head = el("div", "conf-head");
+    head.appendChild(el("p", "field-label", "Confidence check"));
+    head.appendChild(el("p", "conf-legend", current
+      ? current + " of 5 — " + CONFIDENCE_LABELS[current]
+      : "How well do you know this? 1 is no idea, 5 is could teach it."));
+    block.appendChild(head);
+
+    var scale = el("div", "conf-scale");
+    scale.setAttribute("role", "group");
+    scale.setAttribute("aria-label", "Confidence in " + t.name + ", 1 to 5");
+
+    for (var i = 1; i <= 5; i++) {
+      (function (n) {
+        var b = el("button", "conf-btn", String(n));
+        b.type = "button";
+        b.title = n + " — " + CONFIDENCE_LABELS[n] + (n === current ? " (click again to clear)" : "");
+        b.setAttribute("aria-pressed", n === current ? "true" : "false");
+        b.setAttribute("aria-label", n + " of 5, " + CONFIDENCE_LABELS[n]);
+        if (current && n <= current) b.classList.add("is-filled");
+        if (n === current) b.classList.add("is-selected");
+        b.addEventListener("click", function () {
+          if (confidenceOf(t.id) === n) {
+            delete state.confidence[t.id];      /* clicking the current rating clears it */
+          } else {
+            state.confidence[t.id] = n;
+          }
+          save();
+          renderTopic(t);
+          renderRail();
+          decorateOptions();
+        });
+        scale.appendChild(b);
+      })(i);
+    }
+    block.appendChild(scale);
+    return block;
+  }
+
   /* -------------------------------------------------- read-next recommendations */
 
   function recommendations() {
-    var recs = [];
+    var fresh = [], revisit = [];
 
     TOPICS.forEach(function (t) {
-      if (isReviewed(t.id)) return;
-
-      var score = 100 - t._order;      /* syllabus order is the baseline */
-      var reasons = [];
-
       var stat = topicStat(t.id);
       var missed = stat.seen - stat.correct;
-      if (missed > 0) {
-        score += 90 + missed * 10;
-        reasons.push("you have missed " + plural(missed, "question") + " on it");
+      var conf = confidenceOf(t.id);
+
+      if (!isReviewed(t.id)) {
+        var score = 100 - t._order;      /* syllabus order is the baseline */
+        var reasons = [];
+
+        if (conf && conf <= 2) {         /* rated shaky but never marked read */
+          score += 120;
+          reasons.push("you rated it " + conf + "/5 and have not read it yet");
+        }
+        if (missed > 0) {
+          score += 90 + missed * 10;
+          reasons.push("you have missed " + plural(missed, "question") + " on it");
+        }
+
+        var feeders = TOPICS.filter(function (o) {
+          return isReviewed(o.id) && o.related.indexOf(t.id) !== -1;
+        });
+        if (feeders.length) {
+          score += 45 + feeders.length * 8;
+          reasons.push("follows on from " + feeders[0].name);
+        }
+
+        var groupDone = TOPICS.filter(function (o) { return o.group === t.group && isReviewed(o.id); }).length;
+        var groupSize = TOPICS.filter(function (o) { return o.group === t.group; }).length;
+        if (groupDone > 0 && groupDone < groupSize) {
+          score += 25;
+          if (!reasons.length) reasons.push("finishes off " + t.group.toLowerCase());
+        }
+
+        if (!reasons.length) reasons.push("step " + (t._order + 1) + " in the syllabus order");
+
+        fresh.push({ topic: t, score: score, why: reasons[0], kind: "new" });
+        return;
       }
 
-      var feeders = TOPICS.filter(function (o) {
-        return isReviewed(o.id) && o.related.indexOf(t.id) !== -1;
-      });
-      if (feeders.length) {
-        score += 45 + feeders.length * 8;
-        reasons.push("follows on from " + feeders[0].name);
+      /* Already read. Your own confidence rating decides whether it comes back,
+         with quiz accuracy as the second opinion. */
+      var score2 = 0, why = [];
+
+      if (conf) {
+        if (conf <= 2) {
+          score2 = 360 - conf * 25;
+          why.push("you rated it " + conf + "/5, " + CONFIDENCE_LABELS[conf].toLowerCase());
+        } else if (conf === 3) {
+          score2 = 240;
+          why.push("only 3/5 confident");
+        }
+      } else {
+        score2 = 150;                    /* read but never rated: worth a second pass */
+        why.push("read but not rated yet");
       }
 
-      var groupDone = TOPICS.filter(function (o) { return o.group === t.group && isReviewed(o.id); }).length;
-      var groupSize = TOPICS.filter(function (o) { return o.group === t.group; }).length;
-      if (groupDone > 0 && groupDone < groupSize) {
-        score += 25;
-        if (!reasons.length) reasons.push("finishes off " + t.group.toLowerCase());
+      var poor = stat.seen >= 2 && (stat.correct / stat.seen) < 0.7;
+      if (poor) {
+        score2 = Math.max(score2, 260) + 40;
+        why.push(stat.correct + " of " + stat.seen + " right in the quiz");
       }
 
-      if (!reasons.length) {
-        reasons.push("step " + (t._order + 1) + " in the syllabus order");
-      }
+      if (conf >= 4 && !poor) return;    /* solid and scoring well: leave it alone */
 
-      recs.push({ topic: t, score: score, why: reasons[0], kind: "new" });
+      if (score2 > 0) {
+        revisit.push({ topic: t, score: score2, why: "revisit — " + why.join(", "), kind: "revisit" });
+      }
     });
 
-    /* Reviewed topics you are still getting wrong come back to the top. */
-    TOPICS.forEach(function (t) {
-      if (!isReviewed(t.id)) return;
-      var stat = topicStat(t.id);
-      if (stat.seen < 2) return;
-      var rate = stat.correct / stat.seen;
-      if (rate >= 0.7) return;
-      recs.push({
-        topic: t,
-        score: 260 + (1 - rate) * 60,
-        why: "revisit: " + stat.correct + " of " + stat.seen + " right in the quiz",
-        kind: "revisit"
-      });
-    });
+    fresh.sort(function (a, b) { return b.score - a.score; });
+    revisit.sort(function (a, b) { return b.score - a.score; });
 
-    recs.sort(function (a, b) { return b.score - a.score; });
-    return recs.slice(0, 4);
+    /* Keep at most two re-reads in view so new material still gets a look in. */
+    var out = revisit.slice(0, 2).concat(fresh.slice(0, 4 - Math.min(revisit.length, 2)));
+    if (out.length < 4) out = out.concat(revisit.slice(2, 2 + (4 - out.length)));
+
+    out.sort(function (a, b) { return b.score - a.score; });
+    return out.slice(0, 4);
   }
 
   function renderRail() {
@@ -526,9 +606,24 @@
       ticks.appendChild(d);
     });
 
+    var rated = TOPICS.filter(function (t) { return confidenceOf(t.id) > 0; });
+    var shaky = rated.filter(function (t) { return confidenceOf(t.id) <= 2; }).length;
+    var solid = rated.filter(function (t) { return confidenceOf(t.id) >= 4; }).length;
+
+    var conf = $("#conf-summary");
+    if (!rated.length) {
+      conf.textContent = "Rate your confidence at the foot of each section to steer what comes next.";
+    } else {
+      var avg = rated.reduce(function (sum, t) { return sum + confidenceOf(t.id); }, 0) / rated.length;
+      conf.textContent = rated.length + " of " + TOPICS.length + " rated · average " +
+        (Math.round(avg * 10) / 10) + "/5 · " + shaky + " shaky, " + solid + " solid";
+    }
+
     var note = $("#rail-note");
     if (done === 0) {
       note.textContent = "Nothing marked yet. Open a section and it counts as read.";
+    } else if (shaky > 0) {
+      note.textContent = plural(shaky, "section") + " you rated 1 or 2. Those come first below.";
     } else if (done === TOPICS.length) {
       note.textContent = "Every section read. Now drill the quiz and revisit anything below 70%.";
     } else {
@@ -562,8 +657,8 @@
   initTopics();
 
   $("#reset").addEventListener("click", function () {
-    if (!window.confirm("Clear your read sections and quiz record?")) return;
-    state = { reviewed: [], stats: {} };
+    if (!window.confirm("Clear your read sections, confidence ratings and quiz record?")) return;
+    state = { reviewed: [], stats: {}, confidence: {} };
     session = { asked: 0, right: 0 };
     save();
     renderRail();

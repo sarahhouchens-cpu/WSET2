@@ -1,5 +1,5 @@
 <title>WSET 2 Revision Bench</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,500;0,600;1,400&family=Bodoni+Moda:ital,opsz,wght@0,6..96,500;0,6..96,600;1,6..96,500&family=IBM+Plex+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
 <style>
 /* ---------------------------------------------------------------------------
    WSET 2 Revision Bench
@@ -43,8 +43,8 @@
 
   --shadow: 0 1px 2px rgba(26, 27, 22, .06), 0 8px 24px -18px rgba(26, 27, 22, .5);
 
-  --display: "Bodoni Moda", "Didot", "Times New Roman", serif;
-  --body: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --display: "Source Serif 4", Charter, Georgia, "Times New Roman", serif;
+  --body: "Source Sans 3", "Segoe UI", system-ui, -apple-system, Helvetica, Arial, sans-serif;
   --mono: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
 
   --measure: 66ch;
@@ -112,8 +112,8 @@ body {
   background: var(--paper);
   color: var(--ink);
   font-family: var(--body);
-  font-size: 16px;
-  line-height: 1.55;
+  font-size: 17px;
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -160,8 +160,8 @@ body {
 
 .eyebrow {
   font-family: var(--mono);
-  font-size: .68rem;
-  letter-spacing: .18em;
+  font-size: .76rem;
+  letter-spacing: .1em;
   text-transform: uppercase;
   color: var(--muted);
   margin: 0 0 .5rem;
@@ -184,8 +184,8 @@ body {
 }
 
 .countdown .lbl {
-  font-size: .68rem;
-  letter-spacing: .1em;
+  font-size: .76rem;
+  letter-spacing: .04em;
   text-transform: uppercase;
   color: var(--muted);
   max-width: 13ch;
@@ -209,8 +209,8 @@ body {
   background: none;
   color: var(--muted);
   font-family: var(--mono);
-  font-size: .74rem;
-  letter-spacing: .12em;
+  font-size: .82rem;
+  letter-spacing: .06em;
   text-transform: uppercase;
   padding: .85rem 1.15rem .7rem;
   margin-bottom: -1px;
@@ -236,8 +236,8 @@ body {
 
 .field-label {
   font-family: var(--mono);
-  font-size: .66rem;
-  letter-spacing: .17em;
+  font-size: .74rem;
+  letter-spacing: .09em;
   text-transform: uppercase;
   color: var(--muted);
   margin: 0 0 .6rem;
@@ -277,8 +277,8 @@ select {
   display: flex;
   gap: 1.4rem;
   font-family: var(--mono);
-  font-size: .74rem;
-  letter-spacing: .06em;
+  font-size: .8rem;
+  letter-spacing: .02em;
   color: var(--muted);
   font-variant-numeric: tabular-nums;
 }
@@ -314,8 +314,8 @@ select {
   align-items: center;
   gap: .45rem;
   font-family: var(--mono);
-  font-size: .66rem;
-  letter-spacing: .12em;
+  font-size: .74rem;
+  letter-spacing: .05em;
   text-transform: uppercase;
   color: var(--ink-soft);
   border: 1px solid var(--rule-strong);
@@ -325,17 +325,17 @@ select {
 .qcount {
   margin-left: auto;
   font-family: var(--mono);
-  font-size: .7rem;
-  letter-spacing: .1em;
+  font-size: .78rem;
+  letter-spacing: .04em;
   color: var(--muted);
   font-variant-numeric: tabular-nums;
 }
 
 .qstem {
   font-family: var(--display);
-  font-size: clamp(1.25rem, 2.8vw, 1.7rem);
-  font-weight: 500;
-  line-height: 1.28;
+  font-size: clamp(1.22rem, 2.6vw, 1.55rem);
+  font-weight: 600;
+  line-height: 1.35;
   margin: 0 0 1.4rem;
   max-width: 46ch;
   text-wrap: pretty;
@@ -396,8 +396,8 @@ select {
 .verdict {
   margin-left: auto;
   font-family: var(--mono);
-  font-size: .64rem;
-  letter-spacing: .13em;
+  font-size: .72rem;
+  letter-spacing: .06em;
   text-transform: uppercase;
   flex: none;
   padding-top: .35rem;
@@ -430,16 +430,16 @@ select {
 
 .hint {
   font-family: var(--mono);
-  font-size: .7rem;
-  letter-spacing: .08em;
+  font-size: .78rem;
+  letter-spacing: .03em;
   color: var(--muted);
 }
 
 .btn {
   appearance: none;
   font-family: var(--mono);
-  font-size: .74rem;
-  letter-spacing: .13em;
+  font-size: .8rem;
+  letter-spacing: .05em;
   text-transform: uppercase;
   background: var(--ink);
   color: var(--paper);
@@ -464,8 +464,8 @@ select {
   border: 0;
   padding: 0;
   font-family: var(--mono);
-  font-size: .68rem;
-  letter-spacing: .1em;
+  font-size: .78rem;
+  letter-spacing: .03em;
   text-transform: uppercase;
   color: var(--accent);
   cursor: pointer;
@@ -518,7 +518,7 @@ select {
 .tick.done { background: var(--accent); border-color: var(--accent); }
 
 .rail-note {
-  font-size: .82rem;
+  font-size: .88rem;
   color: var(--muted);
   margin: 0;
 }
@@ -552,8 +552,8 @@ select {
   font-variant-numeric: tabular-nums;
 }
 
-.readnext .nm { font-weight: 600; font-size: .92rem; display: block; }
-.readnext .why { display: block; font-size: .78rem; color: var(--muted); line-height: 1.35; }
+.readnext .nm { font-weight: 600; font-size: .98rem; display: block; }
+.readnext .why { display: block; font-size: .85rem; color: var(--muted); line-height: 1.4; }
 
 /* ------------------------------------------------------------- topic article */
 
@@ -596,8 +596,8 @@ select {
 
 .topic-head .group-tag {
   font-family: var(--mono);
-  font-size: .66rem;
-  letter-spacing: .16em;
+  font-size: .74rem;
+  letter-spacing: .08em;
   text-transform: uppercase;
   color: var(--muted);
 }
@@ -606,9 +606,8 @@ select {
 
 .blurb {
   font-family: var(--display);
-  font-size: 1.12rem;
-  font-style: italic;
-  line-height: 1.5;
+  font-size: 1.16rem;
+  line-height: 1.6;
   color: var(--ink-soft);
   max-width: var(--measure);
   margin: 0 0 2rem;
@@ -633,8 +632,8 @@ select {
 
 .row dt {
   font-weight: 600;
-  font-size: .92rem;
-  line-height: 1.4;
+  font-size: .98rem;
+  line-height: 1.45;
 }
 
 .row dd {
@@ -680,8 +679,8 @@ select {
 .related-links button {
   appearance: none;
   font-family: var(--mono);
-  font-size: .68rem;
-  letter-spacing: .08em;
+  font-size: .78rem;
+  letter-spacing: .02em;
   background: none;
   border: 1px solid var(--rule-strong);
   color: var(--ink-soft);
@@ -703,9 +702,9 @@ select {
 
 .stat-line {
   font-family: var(--mono);
-  font-size: .72rem;
+  font-size: .8rem;
   color: var(--muted);
-  letter-spacing: .06em;
+  letter-spacing: .02em;
 }
 
 /* -------------------------------------------------------------------- footer */
@@ -720,14 +719,79 @@ select {
   justify-content: space-between;
   align-items: center;
   font-family: var(--mono);
-  font-size: .68rem;
-  letter-spacing: .08em;
+  font-size: .76rem;
+  letter-spacing: .03em;
   color: var(--muted);
   text-transform: uppercase;
 }
 
 @media (prefers-reduced-motion: reduce) {
   * { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}
+
+/* --------------------------------------------------------- confidence rating */
+
+.conf-block {
+  margin-top: 2rem;
+  padding-top: 1.2rem;
+  border-top: 1px solid var(--rule);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem 1.5rem;
+}
+
+.conf-head { display: flex; flex-direction: column; gap: .1rem; }
+.conf-head .field-label { margin-bottom: .35rem; }
+
+.conf-legend {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: .8rem;
+  color: var(--muted);
+  max-width: 42ch;
+  line-height: 1.4;
+}
+
+.conf-scale { display: flex; }
+
+.conf-btn {
+  appearance: none;
+  font-family: var(--mono);
+  font-size: .88rem;
+  font-variant-numeric: tabular-nums;
+  width: 2.7rem;
+  height: 2.7rem;
+  display: grid;
+  place-items: center;
+  background: var(--surface);
+  color: var(--muted);
+  border: 1px solid var(--rule-strong);
+  margin-left: -1px;
+  cursor: pointer;
+  transition: background .12s ease, color .12s ease;
+}
+
+.conf-btn:first-child { margin-left: 0; }
+
+.conf-btn:hover { background: var(--surface-sunk); color: var(--ink); }
+
+/* Filling the scale up to the chosen number reads as a meter, not five buttons. */
+.conf-btn.is-filled {
+  background: var(--accent-wash);
+  color: var(--accent);
+  border-color: var(--accent);
+  position: relative;
+  z-index: 1;
+}
+
+.conf-btn.is-selected {
+  background: var(--accent);
+  color: var(--accent-ink);
+  border-color: var(--accent);
+  font-weight: 600;
+  z-index: 2;
 }
 
 </style>
@@ -783,6 +847,7 @@ select {
           <p class="field-label">Coverage</p>
           <p class="progress-num" id="progress-num"></p>
           <div class="ticks" id="ticks" aria-hidden="true"></div>
+          <p class="rail-note" id="conf-summary"></p>
           <p class="rail-note" id="rail-note"></p>
         </section>
 
@@ -1989,7 +2054,10 @@ const QUESTIONS = [
 
   /* ------------------------------------------------------------- persistence */
 
-  var state = { reviewed: [], stats: {} };
+  var state = { reviewed: [], stats: {}, confidence: {} };
+
+  /* How the 1-5 self-rating reads back to the user. */
+  var CONFIDENCE_LABELS = ["", "No idea", "Shaky", "Getting there", "Solid", "Could teach it"];
 
   function load() {
     try {
@@ -1998,6 +2066,7 @@ const QUESTIONS = [
       var parsed = JSON.parse(raw);
       if (parsed && Array.isArray(parsed.reviewed)) state.reviewed = parsed.reviewed;
       if (parsed && parsed.stats && typeof parsed.stats === "object") state.stats = parsed.stats;
+      if (parsed && parsed.confidence && typeof parsed.confidence === "object") state.confidence = parsed.confidence;
     } catch (e) { /* private mode, blocked storage: carry on with defaults */ }
   }
 
@@ -2008,6 +2077,8 @@ const QUESTIONS = [
   }
 
   function isReviewed(id) { return state.reviewed.indexOf(id) !== -1; }
+
+  function confidenceOf(id) { return state.confidence[id] || 0; }
 
   function topicStat(id) {
     var s = state.stats[id];
@@ -2102,7 +2173,8 @@ const QUESTIONS = [
     if (focus === "weak") {
       var weak = TOPICS.filter(function (t) {
         var s = topicStat(t.id);
-        return s.seen > 0 && s.correct < s.seen;
+        var conf = confidenceOf(t.id);
+        return (s.seen > 0 && s.correct < s.seen) || (conf > 0 && conf <= 2);
       }).map(function (t) { return t.id; });
       if (!weak.length) return QUESTIONS.slice();
       return QUESTIONS.filter(function (q) { return weak.indexOf(q.t) !== -1; });
@@ -2243,7 +2315,7 @@ const QUESTIONS = [
     var focus = $("#focus");
     var frag = document.createDocumentFragment();
 
-    [["all", "All topics (" + QUESTIONS.length + " questions)"], ["weak", "My weak spots"]].forEach(function (pair) {
+    [["all", "All topics (" + QUESTIONS.length + " questions)"], ["weak", "My weak spots (missed or rated 1-2)"]].forEach(function (pair) {
       var o = el("option", null, pair[1]);
       o.value = pair[0];
       frag.appendChild(o);
@@ -2314,7 +2386,8 @@ const QUESTIONS = [
     [].slice.call(sel.options).forEach(function (o) {
       var t = byId[o.value];
       if (!t) return;
-      o.textContent = (isReviewed(t.id) ? "✓ " : "• ") + t.name;
+      var conf = confidenceOf(t.id);
+      o.textContent = (isReviewed(t.id) ? "✓ " : "• ") + t.name + (conf ? "  " + conf + "/5" : "");
     });
   }
 
@@ -2417,6 +2490,8 @@ const QUESTIONS = [
       doc.appendChild(sectionBlock("Study alongside", links));
     }
 
+    doc.appendChild(confidenceBlock(t));
+
     var foot = el("div", "topic-quizlink");
     var st = topicStat(t.id);
     var n = QUESTIONS.filter(function (q) { return q.t === t.id; }).length;
@@ -2436,63 +2511,133 @@ const QUESTIONS = [
     doc.appendChild(foot);
   }
 
+  /* Self-rated confidence, 1-5, read back into the recommendations below. */
+  function confidenceBlock(t) {
+    var current = confidenceOf(t.id);
+
+    var block = el("div", "conf-block");
+
+    var head = el("div", "conf-head");
+    head.appendChild(el("p", "field-label", "Confidence check"));
+    head.appendChild(el("p", "conf-legend", current
+      ? current + " of 5 — " + CONFIDENCE_LABELS[current]
+      : "How well do you know this? 1 is no idea, 5 is could teach it."));
+    block.appendChild(head);
+
+    var scale = el("div", "conf-scale");
+    scale.setAttribute("role", "group");
+    scale.setAttribute("aria-label", "Confidence in " + t.name + ", 1 to 5");
+
+    for (var i = 1; i <= 5; i++) {
+      (function (n) {
+        var b = el("button", "conf-btn", String(n));
+        b.type = "button";
+        b.title = n + " — " + CONFIDENCE_LABELS[n] + (n === current ? " (click again to clear)" : "");
+        b.setAttribute("aria-pressed", n === current ? "true" : "false");
+        b.setAttribute("aria-label", n + " of 5, " + CONFIDENCE_LABELS[n]);
+        if (current && n <= current) b.classList.add("is-filled");
+        if (n === current) b.classList.add("is-selected");
+        b.addEventListener("click", function () {
+          if (confidenceOf(t.id) === n) {
+            delete state.confidence[t.id];      /* clicking the current rating clears it */
+          } else {
+            state.confidence[t.id] = n;
+          }
+          save();
+          renderTopic(t);
+          renderRail();
+          decorateOptions();
+        });
+        scale.appendChild(b);
+      })(i);
+    }
+    block.appendChild(scale);
+    return block;
+  }
+
   /* -------------------------------------------------- read-next recommendations */
 
   function recommendations() {
-    var recs = [];
+    var fresh = [], revisit = [];
 
     TOPICS.forEach(function (t) {
-      if (isReviewed(t.id)) return;
-
-      var score = 100 - t._order;      /* syllabus order is the baseline */
-      var reasons = [];
-
       var stat = topicStat(t.id);
       var missed = stat.seen - stat.correct;
-      if (missed > 0) {
-        score += 90 + missed * 10;
-        reasons.push("you have missed " + plural(missed, "question") + " on it");
+      var conf = confidenceOf(t.id);
+
+      if (!isReviewed(t.id)) {
+        var score = 100 - t._order;      /* syllabus order is the baseline */
+        var reasons = [];
+
+        if (conf && conf <= 2) {         /* rated shaky but never marked read */
+          score += 120;
+          reasons.push("you rated it " + conf + "/5 and have not read it yet");
+        }
+        if (missed > 0) {
+          score += 90 + missed * 10;
+          reasons.push("you have missed " + plural(missed, "question") + " on it");
+        }
+
+        var feeders = TOPICS.filter(function (o) {
+          return isReviewed(o.id) && o.related.indexOf(t.id) !== -1;
+        });
+        if (feeders.length) {
+          score += 45 + feeders.length * 8;
+          reasons.push("follows on from " + feeders[0].name);
+        }
+
+        var groupDone = TOPICS.filter(function (o) { return o.group === t.group && isReviewed(o.id); }).length;
+        var groupSize = TOPICS.filter(function (o) { return o.group === t.group; }).length;
+        if (groupDone > 0 && groupDone < groupSize) {
+          score += 25;
+          if (!reasons.length) reasons.push("finishes off " + t.group.toLowerCase());
+        }
+
+        if (!reasons.length) reasons.push("step " + (t._order + 1) + " in the syllabus order");
+
+        fresh.push({ topic: t, score: score, why: reasons[0], kind: "new" });
+        return;
       }
 
-      var feeders = TOPICS.filter(function (o) {
-        return isReviewed(o.id) && o.related.indexOf(t.id) !== -1;
-      });
-      if (feeders.length) {
-        score += 45 + feeders.length * 8;
-        reasons.push("follows on from " + feeders[0].name);
+      /* Already read. Your own confidence rating decides whether it comes back,
+         with quiz accuracy as the second opinion. */
+      var score2 = 0, why = [];
+
+      if (conf) {
+        if (conf <= 2) {
+          score2 = 360 - conf * 25;
+          why.push("you rated it " + conf + "/5, " + CONFIDENCE_LABELS[conf].toLowerCase());
+        } else if (conf === 3) {
+          score2 = 240;
+          why.push("only 3/5 confident");
+        }
+      } else {
+        score2 = 150;                    /* read but never rated: worth a second pass */
+        why.push("read but not rated yet");
       }
 
-      var groupDone = TOPICS.filter(function (o) { return o.group === t.group && isReviewed(o.id); }).length;
-      var groupSize = TOPICS.filter(function (o) { return o.group === t.group; }).length;
-      if (groupDone > 0 && groupDone < groupSize) {
-        score += 25;
-        if (!reasons.length) reasons.push("finishes off " + t.group.toLowerCase());
+      var poor = stat.seen >= 2 && (stat.correct / stat.seen) < 0.7;
+      if (poor) {
+        score2 = Math.max(score2, 260) + 40;
+        why.push(stat.correct + " of " + stat.seen + " right in the quiz");
       }
 
-      if (!reasons.length) {
-        reasons.push("step " + (t._order + 1) + " in the syllabus order");
-      }
+      if (conf >= 4 && !poor) return;    /* solid and scoring well: leave it alone */
 
-      recs.push({ topic: t, score: score, why: reasons[0], kind: "new" });
+      if (score2 > 0) {
+        revisit.push({ topic: t, score: score2, why: "revisit — " + why.join(", "), kind: "revisit" });
+      }
     });
 
-    /* Reviewed topics you are still getting wrong come back to the top. */
-    TOPICS.forEach(function (t) {
-      if (!isReviewed(t.id)) return;
-      var stat = topicStat(t.id);
-      if (stat.seen < 2) return;
-      var rate = stat.correct / stat.seen;
-      if (rate >= 0.7) return;
-      recs.push({
-        topic: t,
-        score: 260 + (1 - rate) * 60,
-        why: "revisit: " + stat.correct + " of " + stat.seen + " right in the quiz",
-        kind: "revisit"
-      });
-    });
+    fresh.sort(function (a, b) { return b.score - a.score; });
+    revisit.sort(function (a, b) { return b.score - a.score; });
 
-    recs.sort(function (a, b) { return b.score - a.score; });
-    return recs.slice(0, 4);
+    /* Keep at most two re-reads in view so new material still gets a look in. */
+    var out = revisit.slice(0, 2).concat(fresh.slice(0, 4 - Math.min(revisit.length, 2)));
+    if (out.length < 4) out = out.concat(revisit.slice(2, 2 + (4 - out.length)));
+
+    out.sort(function (a, b) { return b.score - a.score; });
+    return out.slice(0, 4);
   }
 
   function renderRail() {
@@ -2507,9 +2652,24 @@ const QUESTIONS = [
       ticks.appendChild(d);
     });
 
+    var rated = TOPICS.filter(function (t) { return confidenceOf(t.id) > 0; });
+    var shaky = rated.filter(function (t) { return confidenceOf(t.id) <= 2; }).length;
+    var solid = rated.filter(function (t) { return confidenceOf(t.id) >= 4; }).length;
+
+    var conf = $("#conf-summary");
+    if (!rated.length) {
+      conf.textContent = "Rate your confidence at the foot of each section to steer what comes next.";
+    } else {
+      var avg = rated.reduce(function (sum, t) { return sum + confidenceOf(t.id); }, 0) / rated.length;
+      conf.textContent = rated.length + " of " + TOPICS.length + " rated · average " +
+        (Math.round(avg * 10) / 10) + "/5 · " + shaky + " shaky, " + solid + " solid";
+    }
+
     var note = $("#rail-note");
     if (done === 0) {
       note.textContent = "Nothing marked yet. Open a section and it counts as read.";
+    } else if (shaky > 0) {
+      note.textContent = plural(shaky, "section") + " you rated 1 or 2. Those come first below.";
     } else if (done === TOPICS.length) {
       note.textContent = "Every section read. Now drill the quiz and revisit anything below 70%.";
     } else {
@@ -2543,8 +2703,8 @@ const QUESTIONS = [
   initTopics();
 
   $("#reset").addEventListener("click", function () {
-    if (!window.confirm("Clear your read sections and quiz record?")) return;
-    state = { reviewed: [], stats: {} };
+    if (!window.confirm("Clear your read sections, confidence ratings and quiz record?")) return;
+    state = { reviewed: [], stats: {}, confidence: {} };
     session = { asked: 0, right: 0 };
     save();
     renderRail();

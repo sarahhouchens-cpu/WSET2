@@ -40,8 +40,8 @@
 
   --shadow: 0 1px 2px rgba(26, 27, 22, .06), 0 8px 24px -18px rgba(26, 27, 22, .5);
 
-  --display: "Bodoni Moda", "Didot", "Times New Roman", serif;
-  --body: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --display: "Source Serif 4", Charter, Georgia, "Times New Roman", serif;
+  --body: "Source Sans 3", "Segoe UI", system-ui, -apple-system, Helvetica, Arial, sans-serif;
   --mono: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
 
   --measure: 66ch;
@@ -109,8 +109,8 @@ body {
   background: var(--paper);
   color: var(--ink);
   font-family: var(--body);
-  font-size: 16px;
-  line-height: 1.55;
+  font-size: 17px;
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -157,8 +157,8 @@ body {
 
 .eyebrow {
   font-family: var(--mono);
-  font-size: .68rem;
-  letter-spacing: .18em;
+  font-size: .76rem;
+  letter-spacing: .1em;
   text-transform: uppercase;
   color: var(--muted);
   margin: 0 0 .5rem;
@@ -181,8 +181,8 @@ body {
 }
 
 .countdown .lbl {
-  font-size: .68rem;
-  letter-spacing: .1em;
+  font-size: .76rem;
+  letter-spacing: .04em;
   text-transform: uppercase;
   color: var(--muted);
   max-width: 13ch;
@@ -206,8 +206,8 @@ body {
   background: none;
   color: var(--muted);
   font-family: var(--mono);
-  font-size: .74rem;
-  letter-spacing: .12em;
+  font-size: .82rem;
+  letter-spacing: .06em;
   text-transform: uppercase;
   padding: .85rem 1.15rem .7rem;
   margin-bottom: -1px;
@@ -233,8 +233,8 @@ body {
 
 .field-label {
   font-family: var(--mono);
-  font-size: .66rem;
-  letter-spacing: .17em;
+  font-size: .74rem;
+  letter-spacing: .09em;
   text-transform: uppercase;
   color: var(--muted);
   margin: 0 0 .6rem;
@@ -274,8 +274,8 @@ select {
   display: flex;
   gap: 1.4rem;
   font-family: var(--mono);
-  font-size: .74rem;
-  letter-spacing: .06em;
+  font-size: .8rem;
+  letter-spacing: .02em;
   color: var(--muted);
   font-variant-numeric: tabular-nums;
 }
@@ -311,8 +311,8 @@ select {
   align-items: center;
   gap: .45rem;
   font-family: var(--mono);
-  font-size: .66rem;
-  letter-spacing: .12em;
+  font-size: .74rem;
+  letter-spacing: .05em;
   text-transform: uppercase;
   color: var(--ink-soft);
   border: 1px solid var(--rule-strong);
@@ -322,17 +322,17 @@ select {
 .qcount {
   margin-left: auto;
   font-family: var(--mono);
-  font-size: .7rem;
-  letter-spacing: .1em;
+  font-size: .78rem;
+  letter-spacing: .04em;
   color: var(--muted);
   font-variant-numeric: tabular-nums;
 }
 
 .qstem {
   font-family: var(--display);
-  font-size: clamp(1.25rem, 2.8vw, 1.7rem);
-  font-weight: 500;
-  line-height: 1.28;
+  font-size: clamp(1.22rem, 2.6vw, 1.55rem);
+  font-weight: 600;
+  line-height: 1.35;
   margin: 0 0 1.4rem;
   max-width: 46ch;
   text-wrap: pretty;
@@ -393,8 +393,8 @@ select {
 .verdict {
   margin-left: auto;
   font-family: var(--mono);
-  font-size: .64rem;
-  letter-spacing: .13em;
+  font-size: .72rem;
+  letter-spacing: .06em;
   text-transform: uppercase;
   flex: none;
   padding-top: .35rem;
@@ -427,16 +427,16 @@ select {
 
 .hint {
   font-family: var(--mono);
-  font-size: .7rem;
-  letter-spacing: .08em;
+  font-size: .78rem;
+  letter-spacing: .03em;
   color: var(--muted);
 }
 
 .btn {
   appearance: none;
   font-family: var(--mono);
-  font-size: .74rem;
-  letter-spacing: .13em;
+  font-size: .8rem;
+  letter-spacing: .05em;
   text-transform: uppercase;
   background: var(--ink);
   color: var(--paper);
@@ -461,8 +461,8 @@ select {
   border: 0;
   padding: 0;
   font-family: var(--mono);
-  font-size: .68rem;
-  letter-spacing: .1em;
+  font-size: .78rem;
+  letter-spacing: .03em;
   text-transform: uppercase;
   color: var(--accent);
   cursor: pointer;
@@ -515,7 +515,7 @@ select {
 .tick.done { background: var(--accent); border-color: var(--accent); }
 
 .rail-note {
-  font-size: .82rem;
+  font-size: .88rem;
   color: var(--muted);
   margin: 0;
 }
@@ -549,8 +549,8 @@ select {
   font-variant-numeric: tabular-nums;
 }
 
-.readnext .nm { font-weight: 600; font-size: .92rem; display: block; }
-.readnext .why { display: block; font-size: .78rem; color: var(--muted); line-height: 1.35; }
+.readnext .nm { font-weight: 600; font-size: .98rem; display: block; }
+.readnext .why { display: block; font-size: .85rem; color: var(--muted); line-height: 1.4; }
 
 /* ------------------------------------------------------------- topic article */
 
@@ -593,8 +593,8 @@ select {
 
 .topic-head .group-tag {
   font-family: var(--mono);
-  font-size: .66rem;
-  letter-spacing: .16em;
+  font-size: .74rem;
+  letter-spacing: .08em;
   text-transform: uppercase;
   color: var(--muted);
 }
@@ -603,9 +603,8 @@ select {
 
 .blurb {
   font-family: var(--display);
-  font-size: 1.12rem;
-  font-style: italic;
-  line-height: 1.5;
+  font-size: 1.16rem;
+  line-height: 1.6;
   color: var(--ink-soft);
   max-width: var(--measure);
   margin: 0 0 2rem;
@@ -630,8 +629,8 @@ select {
 
 .row dt {
   font-weight: 600;
-  font-size: .92rem;
-  line-height: 1.4;
+  font-size: .98rem;
+  line-height: 1.45;
 }
 
 .row dd {
@@ -677,8 +676,8 @@ select {
 .related-links button {
   appearance: none;
   font-family: var(--mono);
-  font-size: .68rem;
-  letter-spacing: .08em;
+  font-size: .78rem;
+  letter-spacing: .02em;
   background: none;
   border: 1px solid var(--rule-strong);
   color: var(--ink-soft);
@@ -700,9 +699,9 @@ select {
 
 .stat-line {
   font-family: var(--mono);
-  font-size: .72rem;
+  font-size: .8rem;
   color: var(--muted);
-  letter-spacing: .06em;
+  letter-spacing: .02em;
 }
 
 /* -------------------------------------------------------------------- footer */
@@ -717,12 +716,77 @@ select {
   justify-content: space-between;
   align-items: center;
   font-family: var(--mono);
-  font-size: .68rem;
-  letter-spacing: .08em;
+  font-size: .76rem;
+  letter-spacing: .03em;
   color: var(--muted);
   text-transform: uppercase;
 }
 
 @media (prefers-reduced-motion: reduce) {
   * { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}
+
+/* --------------------------------------------------------- confidence rating */
+
+.conf-block {
+  margin-top: 2rem;
+  padding-top: 1.2rem;
+  border-top: 1px solid var(--rule);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem 1.5rem;
+}
+
+.conf-head { display: flex; flex-direction: column; gap: .1rem; }
+.conf-head .field-label { margin-bottom: .35rem; }
+
+.conf-legend {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: .8rem;
+  color: var(--muted);
+  max-width: 42ch;
+  line-height: 1.4;
+}
+
+.conf-scale { display: flex; }
+
+.conf-btn {
+  appearance: none;
+  font-family: var(--mono);
+  font-size: .88rem;
+  font-variant-numeric: tabular-nums;
+  width: 2.7rem;
+  height: 2.7rem;
+  display: grid;
+  place-items: center;
+  background: var(--surface);
+  color: var(--muted);
+  border: 1px solid var(--rule-strong);
+  margin-left: -1px;
+  cursor: pointer;
+  transition: background .12s ease, color .12s ease;
+}
+
+.conf-btn:first-child { margin-left: 0; }
+
+.conf-btn:hover { background: var(--surface-sunk); color: var(--ink); }
+
+/* Filling the scale up to the chosen number reads as a meter, not five buttons. */
+.conf-btn.is-filled {
+  background: var(--accent-wash);
+  color: var(--accent);
+  border-color: var(--accent);
+  position: relative;
+  z-index: 1;
+}
+
+.conf-btn.is-selected {
+  background: var(--accent);
+  color: var(--accent-ink);
+  border-color: var(--accent);
+  font-weight: 600;
+  z-index: 2;
 }
