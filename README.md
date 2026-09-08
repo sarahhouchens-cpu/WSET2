@@ -10,9 +10,13 @@ Two tabs:
    wines), or "my weak spots" — the topics you have actually got wrong so far.
 2. **Topic notes** — a dropdown of 32 exam topics. Each one gives key regions,
    flavour profile and structure, must-know facts, and the exam traps that
-   catch people out. A **Read next** panel recommends what to study next based
-   on what you have already read, which sections feed into each other, and
-   where your quiz answers are going wrong.
+   catch people out. Each section carries a **1-5 confidence rating**, and a
+   **Read next** panel recommends what to study next from those ratings, what
+   you have marked as reviewed, which sections feed into each other, and where
+   your quiz answers are going wrong.
+
+   Sections are marked reviewed only by pressing **Mark as reviewed** — opening
+   or browsing a topic never marks it.
 
 ## Running it
 
@@ -72,6 +76,21 @@ the baseline for recommendations.
 
 ## Progress
 
-Read sections and quiz results are stored in the browser's `localStorage`, so
-progress stays on the device you study on. "Reset progress" in the footer
-clears it.
+Reviewed sections, confidence ratings and quiz results are stored in the
+browser's `localStorage`. Progress is per browser and per device: it does not
+sync between a laptop and a phone, and clearing site data removes it. "Reset
+progress" in the footer clears it deliberately.
+
+### How "Read next" ranks sections
+
+| Signal | Effect |
+| --- | --- |
+| Rated 1-2 | Promoted above unread material |
+| Rated 3 | Offered as a lighter revisit |
+| Rated 4-5 | Suppressed, unless quiz accuracy contradicts it |
+| Reviewed, unrated | Comes back for a second pass |
+| Missed questions | Raises priority in proportion to how many |
+| Related to a reviewed section | Small boost, shown as "follows on from X" |
+| Otherwise | Syllabus order |
+
+At most two revisits appear at once so unread sections keep surfacing.

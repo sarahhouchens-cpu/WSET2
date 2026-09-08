@@ -8,7 +8,7 @@
 
   /* ------------------------------------------------------------- persistence */
 
-  var state = { reviewed: [], stats: {}, confidence: {} };
+  var state = { reviewed: [], stats: {}, confidence: {}, flags: {} };
 
   /* How the 1-5 self-rating reads back to the user. */
   var CONFIDENCE_LABELS = ["", "No idea", "Shaky", "Getting there", "Solid", "Could teach it"];
@@ -21,6 +21,7 @@
       if (parsed && Array.isArray(parsed.reviewed)) state.reviewed = parsed.reviewed;
       if (parsed && parsed.stats && typeof parsed.stats === "object") state.stats = parsed.stats;
       if (parsed && parsed.confidence && typeof parsed.confidence === "object") state.confidence = parsed.confidence;
+      if (parsed && parsed.flags && typeof parsed.flags === "object") state.flags = parsed.flags;
     } catch (e) { /* private mode, blocked storage: carry on with defaults */ }
   }
 
@@ -30,7 +31,24 @@
     } catch (e) { /* nothing to do: the page still works for this visit */ }
   }
 
+  /* Builds before this one counted merely opening a section as reading it, so
+     the stored flags are not trustworthy. Clear them once, keeping the quiz
+     record and confidence ratings, which were never affected. */
+  function migrate() {
+    if (state.flags.manualReviewOnly) return;
+    state.reviewed = [];
+    state.flags.manualReviewOnly = true;
+    save();
+  }
+
   function isReviewed(id) { return state.reviewed.indexOf(id) !== -1; }
+
+  function setReviewed(id, on) {
+    var i = state.reviewed.indexOf(id);
+    if (on && i === -1) state.reviewed.push(id);
+    if (!on && i !== -1) state.reviewed.splice(i, 1);
+    save();
+  }
 
   function confidenceOf(id) { return state.confidence[id] || 0; }
 
@@ -240,7 +258,7 @@
 
     var read = el("button", "btn btn-ghost", "Read up on " + topic.name);
     read.type = "button";
-    read.addEventListener("click", function () { openTopic(topic.id, true); selectTab("topics"); });
+    read.addEventListener("click", function () { openTopic(topic.id); selectTab("topics"); });
     foot.appendChild(read);
 
     foot.appendChild(el("span", "hint", "Enter for the next question"));
@@ -330,9 +348,9 @@
       sel.appendChild(og);
     });
 
-    sel.addEventListener("change", function () { openTopic(sel.value, true); });
+    sel.addEventListener("change", function () { openTopic(sel.value); });
 
-    openTopic(TOPICS[0].id, false);   /* first load: show content, but do not claim it as read */
+    openTopic(TOPICS[0].id);
   }
 
   function decorateOptions() {
@@ -345,19 +363,31 @@
     });
   }
 
-  function openTopic(id, markRead) {
+  /* Opening a section never marks it: only the Mark as reviewed control does. */
+  function openTopic(id) {
     currentTopic = id;
     $("#topic-select").value = id;
-
-    if (markRead && !isReviewed(id)) {
-      state.reviewed.push(id);
-      save();
-    }
 
     renderTopic(byId[id]);
     renderRail();
     decorateOptions();
     document.querySelector(".topic-doc").scrollIntoView({ block: "nearest" });
+  }
+
+  function reviewButton(t, extraClass) {
+    var on = isReviewed(t.id);
+    var b = el("button", (on ? "btn btn-ghost" : "btn") + (extraClass ? " " + extraClass : ""),
+               on ? "✓ Reviewed" : "Mark as reviewed");
+    b.type = "button";
+    b.title = on ? "Click to unmark this section" : "Mark this section as reviewed";
+    b.setAttribute("aria-pressed", on ? "true" : "false");
+    b.addEventListener("click", function () {
+      setReviewed(t.id, !isReviewed(t.id));
+      renderTopic(t);
+      renderRail();
+      decorateOptions();
+    });
+    return b;
   }
 
   function sectionBlock(label, node) {
@@ -400,17 +430,7 @@
     titleWrap.appendChild(el("h2", null, t.name));
     head.appendChild(titleWrap);
 
-    var toggle = el("button", "btn btn-ghost reviewed-toggle", isReviewed(t.id) ? "✓ Reviewed" : "Mark reviewed");
-    toggle.type = "button";
-    toggle.addEventListener("click", function () {
-      var i = state.reviewed.indexOf(t.id);
-      if (i === -1) state.reviewed.push(t.id); else state.reviewed.splice(i, 1);
-      save();
-      renderTopic(t);
-      renderRail();
-      decorateOptions();
-    });
-    head.appendChild(toggle);
+    head.appendChild(reviewButton(t, "reviewed-toggle"));
     doc.appendChild(head);
 
     doc.appendChild(el("p", "blurb", t.blurb));
@@ -438,7 +458,7 @@
       t.related.forEach(function (rid) {
         var b = el("button", null, byId[rid].name);
         b.type = "button";
-        b.addEventListener("click", function () { openTopic(rid, true); });
+        b.addEventListener("click", function () { openTopic(rid); });
         links.appendChild(b);
       });
       doc.appendChild(sectionBlock("Study alongside", links));
@@ -453,7 +473,9 @@
       ? "You have answered " + plural(st.seen, "question") + " here · " + st.correct + " correct"
       : plural(n, "question") + " in the bank on this topic"));
 
-    var quizBtn = el("button", "btn", "Test me on this");
+    foot.appendChild(reviewButton(t));
+
+    var quizBtn = el("button", "btn btn-ghost", "Test me on this");
     quizBtn.type = "button";
     quizBtn.addEventListener("click", function () {
       $("#focus").value = t.id;
@@ -621,7 +643,7 @@
 
     var note = $("#rail-note");
     if (done === 0) {
-      note.textContent = "Nothing marked yet. Open a section and it counts as read.";
+      note.textContent = "Nothing marked yet. Use Mark as reviewed at the foot of a section.";
     } else if (shaky > 0) {
       note.textContent = plural(shaky, "section") + " you rated 1 or 2. Those come first below.";
     } else if (done === TOPICS.length) {
@@ -642,7 +664,7 @@
       txt.appendChild(el("span", "nm", r.topic.name));
       txt.appendChild(el("span", "why", r.why));
       b.appendChild(txt);
-      b.addEventListener("click", function () { openTopic(r.topic.id, true); });
+      b.addEventListener("click", function () { openTopic(r.topic.id); });
       li.appendChild(b);
       list.appendChild(li);
     });
@@ -651,6 +673,7 @@
   /* --------------------------------------------------------------------- boot */
 
   load();
+  migrate();
   renderCountdown();
   initTabs();
   initQuiz();
@@ -658,7 +681,7 @@
 
   $("#reset").addEventListener("click", function () {
     if (!window.confirm("Clear your read sections, confidence ratings and quiz record?")) return;
-    state = { reviewed: [], stats: {}, confidence: {} };
+    state = { reviewed: [], stats: {}, confidence: {}, flags: { manualReviewOnly: true } };
     session = { asked: 0, right: 0 };
     save();
     renderRail();
